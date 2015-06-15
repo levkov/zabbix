@@ -7,9 +7,9 @@ RUN apt-get update && apt-get install wget -y
 RUN wget http://repo.zabbix.com/zabbix/2.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_2.4-1+trusty_all.deb && dpkg -i zabbix-release_2.4-1+trusty_all.deb
 RUN apt-get upgrade -y && apt-get install wget vim mc iptraf nmon htop apache2 openssh-server supervisor mlocate zabbix-agent zabbix-server-mysql zabbix-frontend-php php5-mysql -y
 
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY zabbix.conf /etc/apache2/conf-available/zabbix.conf
-COPY dfg.sh /usr/local/bin/dfg.sh
+COPY conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY conf/zabbix.conf /etc/apache2/conf-available/zabbix.conf
+COPY bin/dfg.sh /usr/local/bin/dfg.sh
 RUN chmod +x /usr/local/bin/dfg.sh
 RUN a2enconf zabbix.conf 
  

@@ -1,6 +1,5 @@
 #/bin/sh
 
-
-ssh-keygen -f "/root/.ssh/known_hosts" -R [localhost]:223
-docker run -p 223:22 -p 8080:80 -p 81:9001 -d levkov/zabbix
+ssh-keygen -f "/root/.ssh/known_hosts" -R [localhost]:220
+docker run -p 220:22 -p 80:80 -p 9001:9001 -p 10051:10051 -d levkov/zabbix
 

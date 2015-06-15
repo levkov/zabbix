@@ -5,17 +5,19 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get install wget -y
 RUN wget http://repo.zabbix.com/zabbix/2.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_2.4-1+trusty_all.deb && dpkg -i zabbix-release_2.4-1+trusty_all.deb
-RUN apt-get upgrade -y && apt-get install wget apache2 openssh-server supervisor mlocate zabbix-agent zabbix-server-mysql zabbix-frontend-php php5-mysql -y
+RUN apt-get upgrade -y && apt-get install wget vim mc iptraf nmon htop apache2 openssh-server supervisor mlocate zabbix-agent zabbix-server-mysql zabbix-frontend-php php5-mysql -y
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY zabbix.conf /etc/apache2/conf-available/zabbix.conf
+COPY dfg.sh /usr/local/bin/dfg.sh
+RUN chmod +x /usr/local/bin/dfg.sh
 RUN a2enconf zabbix.conf 
  
-RUN chmod -R 0777  /etc/zabbix
+RUN chmod -R 0777  /etc/zabbix && mkdir /var/run/zabbix && chmod -R 0777 /var/run/zabbix
 RUN gunzip /usr/share/zabbix-server-mysql/*.gz
 RUN /bin/bash -c "/usr/bin/mysqld_safe &" && \
   sleep 5 && \
-  mysql -e "create user 'zabbix'@'localhost' identified by 'zabbix';" && \
+  mysql -e "create user 'zabbix'@'localhost';" && \
   mysql -e "create database zabbix;" && \
   mysql -e "grant all privileges on zabbix.* to 'zabbix'@'localhost';" && \
   mysql -e "flush privileges;" && \
@@ -35,6 +37,6 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 
 RUN updatedb
 
-EXPOSE 22 80
+EXPOSE 22 80 10051
 CMD ["/usr/bin/supervisord"]
 

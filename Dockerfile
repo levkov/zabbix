@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get install wget -y
 RUN wget http://repo.zabbix.com/zabbix/2.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_2.4-1+trusty_all.deb && dpkg -i zabbix-release_2.4-1+trusty_all.deb
-RUN apt-get upgrade -y && apt-get install wget vim mc iptraf nmon htop apache2 openssh-server supervisor mlocate zabbix-agent zabbix-server-mysql zabbix-frontend-php php5-mysql -y
+RUN apt-get upgrade -y && apt-get install postfix python-pip wget vim mc iptraf nmon htop apache2 openssh-server supervisor mlocate zabbix-agent zabbix-server-mysql zabbix-frontend-php zabbix-java-gateway php5-mysql -y
 
 COPY conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY conf/zabbix.conf /etc/apache2/conf-available/zabbix.conf
@@ -35,6 +35,7 @@ ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 #-------------------------------------------------------------------------------------------------------
 
+RUN pip install boto
 RUN updatedb
 
 EXPOSE 22 80 10051

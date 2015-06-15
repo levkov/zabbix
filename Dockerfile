@@ -7,11 +7,23 @@ RUN apt-get update && apt-get install wget -y
 RUN wget http://repo.zabbix.com/zabbix/2.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_2.4-1+trusty_all.deb && dpkg -i zabbix-release_2.4-1+trusty_all.deb
 RUN apt-get upgrade -y && apt-get install wget apache2 openssh-server supervisor mlocate zabbix-agent zabbix-server-mysql zabbix-frontend-php php5-mysql -y
 
-RUN updatedb
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-RUN cp /usr/share/doc/zabbix-frontend-php/examples/apache.conf /etc/apache2/conf-available/zabbix.conf
-RUN a2enconf zabbix.conf && a2enmod alias
+COPY zabbix.conf /etc/apache2/conf-available/zabbix.conf
+RUN a2enconf zabbix.conf 
+ 
+RUN chmod -R 0777  /etc/zabbix
+RUN gunzip /usr/share/zabbix-server-mysql/*.gz
+RUN /bin/bash -c "/usr/bin/mysqld_safe &" && \
+  sleep 5 && \
+  mysql -e "create user 'zabbix'@'localhost' identified by 'zabbix';" && \
+  mysql -e "create database zabbix;" && \
+  mysql -e "grant all privileges on zabbix.* to 'zabbix'@'localhost';" && \
+  mysql -e "flush privileges;" && \
+  mysql zabbix < /usr/share/zabbix-server-mysql/schema.sql && \
+  mysql zabbix < /usr/share/zabbix-server-mysql/images.sql && \
+  mysql zabbix < /usr/share/zabbix-server-mysql/data.sql
 
+#----------------------------------------------------------------------------------------------------
 RUN mkdir -p /var/run/sshd /var/log/supervisor
 #------------------------------------------------------------------------------------------------------
 RUN echo 'root:zabbix?!' | chpasswd
@@ -20,5 +32,9 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 #-------------------------------------------------------------------------------------------------------
+
+RUN updatedb
+
 EXPOSE 22 80
 CMD ["/usr/bin/supervisord"]
+

@@ -9,7 +9,10 @@ RUN locale-gen en_US.UTF-8 && \
     dpkg -i zabbix-release_2.4-1+trusty_all.deb && \
     apt-get update && \
     apt-get upgrade -y && \
-    apt-get install postfix python-pip mc git vim mc iptraf nmon htop apache2 openssh-server supervisor mlocate zabbix-agent=1:2.4.5-1+trusty zabbix-server-mysql=1:2.4.5-1+trusty zabbix-frontend-php=1:2.4.5-1+trusty zabbix-java-gateway=1:2.4.5-1+trusty php5-mysql -y && \
+    apt-get install postfix python-pip mc git vim mc iptraf nmon htop apache2 openssh-server supervisor mlocate zabbix-agent=1:2.4.5-1+trusty zabbix-server-mysql=1:2.4.5-1+trusty zabbix-frontend-php=1:2.4.5-1+trusty zabbix-java-gateway=1:2.4.5-1+trusty php5-mysql php5-dev -y && \
+    pecl channel-update pecl.php.net && \
+    printf "\n" | pecl install mongo && \
+    echo "extension=mongo.so" >> /etc/php5/cli/php.ini && \
     pip install boto && \
     apt-get clean && \
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* && \ 

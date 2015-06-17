@@ -9,11 +9,7 @@ RUN locale-gen en_US.UTF-8 && \
     dpkg -i zabbix-release_2.4-1+trusty_all.deb && \
     apt-get update && \
     apt-get upgrade -y && \
-    apt-get install postfix python-pip mc git vim mc iptraf nmon htop apache2 openssh-server supervisor mlocate zabbix-agent=1:2.4.5-1+trusty zabbix-server-mysql=1:2.4.5-1+trusty zabbix-frontend-php=1:2.4.5-1+trusty zabbix-java-gateway=1:2.4.5-1+trusty php5-mysql php5-dev -y && \
-    pecl channel-update pecl.php.net && \
-    printf "\n" | pecl install mongo && \
-    echo "extension=mongo.so" >> /etc/php5/cli/php.ini && \
-    pip install boto && \
+    apt-get install postfix vim apache2 openssh-server supervisor zabbix-agent=1:2.4.5-1+trusty zabbix-server-mysql=1:2.4.5-1+trusty zabbix-frontend-php=1:2.4.5-1+trusty zabbix-java-gateway=1:2.4.5-1+trusty php5-mysql -y && \
     apt-get clean && \
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* && \ 
 
@@ -34,7 +30,6 @@ RUN locale-gen en_US.UTF-8 && \
 
 #----------------------------------------------------------------------------------------------------
     mkdir -p /var/run/sshd /var/log/supervisor && \
-    updatedb && \
 #------------------------------------------------------------------------------------------------------
     echo 'root:zabbix?!' | chpasswd && \
     sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
@@ -46,8 +41,6 @@ ENV NOTVISIBLE "in users profile"
 COPY conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY conf/zabbix.conf /etc/apache2/conf-available/zabbix.conf
 COPY conf/zabbix_server.conf /etc/zabbix/zabbix_server.conf
-ADD externalscripts /usr/lib/zabbix/externalscripts/
-RUN chmod -R +x /usr/lib/zabbix/externalscripts
 
 EXPOSE 22 80 10051
 CMD ["/usr/bin/supervisord"]

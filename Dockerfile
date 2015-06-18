@@ -42,6 +42,9 @@ COPY conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY conf/zabbix.conf /etc/apache2/conf-available/zabbix.conf
 COPY conf/zabbix_server.conf /etc/zabbix/zabbix_server.conf
 
+VOLUME /var/lib/mysql
+
+
 EXPOSE 22 80 10051
 CMD ["/usr/bin/supervisord"]
 

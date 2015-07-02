@@ -3,7 +3,6 @@ MAINTAINER levkov
 ENV DEBIAN_FRONTEND noninteractive
 COPY bin/dfg.sh /usr/local/bin/dfg.sh
 
-
 RUN locale-gen en_US.UTF-8 && \
     apt-get update && apt-get install wget -y && \
     wget http://repo.zabbix.com/zabbix/2.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_2.4-1+trusty_all.deb && \ 
@@ -45,6 +44,6 @@ COPY conf/zabbix_server.conf /etc/zabbix/zabbix_server.conf
 
 VOLUME /var/lib/mysql
 
-EXPOSE 22 80 10051
+EXPOSE 10051 22 80 
 CMD ["/usr/bin/supervisord"]
 

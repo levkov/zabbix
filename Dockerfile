@@ -8,7 +8,7 @@ RUN locale-gen en_US.UTF-8 && \
     wget http://repo.zabbix.com/zabbix/2.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_2.4-1+trusty_all.deb && \ 
     dpkg -i zabbix-release_2.4-1+trusty_all.deb && \
     apt-get update && \
-    apt-get upgrade -y && \
+    apt-get -y upgrade && \
     apt-get install postfix vim apache2 openssh-server supervisor zabbix-agent=1:2.4.5-1+trusty zabbix-server-mysql=1:2.4.5-1+trusty zabbix-frontend-php=1:2.4.5-1+trusty zabbix-java-gateway=1:2.4.5-1+trusty php5-mysql -y && \
     apt-get clean && \
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* && \ 

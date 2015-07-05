@@ -35,6 +35,14 @@ RUN locale-gen en_US.UTF-8 && \
     sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
     sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd && \
     echo "export VISIBLE=now" >> /etc/profile
+
+#-------------------------------------------S3 Tools----------------------------------------------    
+RUN wget -O- -q http://s3tools.org/repo/deb-all/stable/s3tools.key | sudo apt-key add - && \
+    wget -O/etc/apt/sources.list.d/s3tools.list http://s3tools.org/repo/deb-all/stable/s3tools.list && \
+    apt-get update && apt-get -y install s3cmd && \
+    rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
+#-------------------------------------------------------------------------------------------------    
+    
 ENV NOTVISIBLE "in users profile"
 #-------------------------------------------------------------------------------------------------------
 

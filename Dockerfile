@@ -18,15 +18,13 @@ RUN locale-gen en_US.UTF-8 && \
     chmod -R 0777  /etc/zabbix && \
     mkdir /var/run/zabbix && \
     chmod -R 0777 /var/run/zabbix && \
-#    /bin/bash -c "/usr/bin/mysqld_safe &" && \
-#    sleep 5 && \
-#    mysql -e "create user 'zabbix'@'localhost';" && \
-#    mysql -e "create database zabbix;" && \
-#    mysql -e "grant all privileges on zabbix.* to 'zabbix'@'localhost';" && \
-#    mysql -e "flush privileges;" && \
-#    mysql zabbix < /usr/share/zabbix-server-mysql/schema.sql && \
-#    mysql zabbix < /usr/share/zabbix-server-mysql/images.sql && \
-#    mysql zabbix < /usr/share/zabbix-server-mysql/data.sql && \
+    /bin/bash -c "/usr/bin/mysqld_safe &" && \
+    sleep 5 && \
+    mysql -e "create user 'zabbix'@'localhost';" && \
+    mysql -e "create database zabbix;" && \
+    mysql -e "grant all privileges on zabbix.* to 'zabbix'@'localhost';" && \
+    mysql -e "flush privileges;" && \
+    cd /usr/share/doc/zabbix-server-mysql && zcat create.sql.gz | mysql -uroot zabbix
 
 #----------------------------------------------------------------------------------------------------
     mkdir -p /var/run/sshd /var/log/supervisor && \
@@ -48,7 +46,7 @@ ENV NOTVISIBLE "in users profile"
 
 COPY conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY conf/zabbix.conf /etc/apache2/conf-available/zabbix.conf
-COPY conf/zabbix_server.conf /etc/zabbix/zabbix_server.conf
+# COPY conf/zabbix_server.conf /etc/zabbix/zabbix_server.conf
 
 VOLUME /var/lib/mysql
 

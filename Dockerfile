@@ -18,15 +18,15 @@ RUN locale-gen en_US.UTF-8 && \
     chmod -R 0777  /etc/zabbix && \
     mkdir /var/run/zabbix && \
     chmod -R 0777 /var/run/zabbix && \
-    /bin/bash -c "/usr/bin/mysqld_safe &" && \
-    sleep 5 && \
-    mysql -e "create user 'zabbix'@'localhost';" && \
-    mysql -e "create database zabbix;" && \
-    mysql -e "grant all privileges on zabbix.* to 'zabbix'@'localhost';" && \
-    mysql -e "flush privileges;" && \
-    mysql zabbix < /usr/share/zabbix-server-mysql/schema.sql && \
-    mysql zabbix < /usr/share/zabbix-server-mysql/images.sql && \
-    mysql zabbix < /usr/share/zabbix-server-mysql/data.sql && \
+#    /bin/bash -c "/usr/bin/mysqld_safe &" && \
+#    sleep 5 && \
+#    mysql -e "create user 'zabbix'@'localhost';" && \
+#    mysql -e "create database zabbix;" && \
+#    mysql -e "grant all privileges on zabbix.* to 'zabbix'@'localhost';" && \
+#    mysql -e "flush privileges;" && \
+#    mysql zabbix < /usr/share/zabbix-server-mysql/schema.sql && \
+#    mysql zabbix < /usr/share/zabbix-server-mysql/images.sql && \
+#    mysql zabbix < /usr/share/zabbix-server-mysql/data.sql && \
 
 #----------------------------------------------------------------------------------------------------
     mkdir -p /var/run/sshd /var/log/supervisor && \

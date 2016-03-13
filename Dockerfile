@@ -24,7 +24,7 @@ RUN locale-gen en_US.UTF-8 && \
     mysql -e "create database zabbix;" && \
     mysql -e "grant all privileges on zabbix.* to 'zabbix'@'localhost';" && \
     mysql -e "flush privileges;" && \
-    cd /usr/share/doc/zabbix-server-mysql && zcat create.sql.gz | mysql -uroot zabbix
+    cd /usr/share/doc/zabbix-server-mysql && zcat create.sql.gz | mysql -uroot zabbix && \
 
 #----------------------------------------------------------------------------------------------------
     mkdir -p /var/run/sshd /var/log/supervisor && \

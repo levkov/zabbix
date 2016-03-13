@@ -9,7 +9,7 @@ RUN locale-gen en_US.UTF-8 && \
     dpkg -i zabbix-release_3.0-1+trusty_all.deb && \
     apt-get update && \
     apt-get upgrade -y && \
-    apt-get install postfix vim apache2 openssh-server supervisor zabbix-agent=1:3.0.1+trusty zabbix-server-mysql=1:2.4.5-1+trusty zabbix-frontend-php=1:3.0.1+trusty zabbix-java-gateway=1:3.0.1+trusty php5-mysql -y && \
+    apt-get install postfix vim apache2 openssh-server supervisor zabbix-agenty zabbix-server-mysql zabbix-frontend-php zabbix-java-gateway php5-mysql -y && \
     apt-get clean && \
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* && \ 
 

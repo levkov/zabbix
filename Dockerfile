@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 MAINTAINER levkov
 ENV DEBIAN_FRONTEND noninteractive
 COPY bin/dfg.sh /usr/local/bin/dfg.sh

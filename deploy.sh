@@ -9,5 +9,6 @@ else
     docker tag zabbix levkov/zabbix:$now
     docker push levkov/zabbix:$now
 
+    sleep 10
     helm upgrade --install  $1 .chart --debug --set image.tag=$now
 fi

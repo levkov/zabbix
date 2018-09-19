@@ -5,8 +5,8 @@ COPY bin/dfg.sh /usr/local/bin/dfg.sh
 
 RUN locale-gen en_US.UTF-8 && \
     apt-get update && apt-get install wget -y && \
-    wget http://repo.zabbix.com/zabbix/3.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_3.2-1+trusty_all.deb && \
-    dpkg -i zabbix-release_3.2-1+trusty_all.deb && \
+    wget http://repo.zabbix.com/zabbix/3.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_3.4-1+trusty_all.deb && \
+    dpkg -i zabbix-release_3.4-1+trusty_all.deb && \
     apt-get update && \
     apt-get upgrade -y && \
     apt-get install postfix vim apache2 openssh-server supervisor zabbix-agent zabbix-server-mysql zabbix-frontend-php zabbix-java-gateway php5-mysql dos2unix -y && \

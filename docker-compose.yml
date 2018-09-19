@@ -1,0 +1,10 @@
+docker:
+  build: .
+  ports:
+  - "10051:10051"
+  - "3306:3306"
+  - "222:22"
+  - "9001:9001"
+  - "80:80"
+  hostname: vault-poc
+  privileged: true

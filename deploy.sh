@@ -9,5 +9,5 @@ else
     docker tag vault levkov/zabbix:$now
     docker push levkov/zabbix:$now
 
-    helm upgrade --install  $1 .chart --debug --set vault_image.tag=$now --set vault_exporter_image.tag=$now
+    helm upgrade --install  $1 .chart --debug --set image.tag=$now
 fi
